@@ -396,6 +396,7 @@ namespace AllReady.DataAccess
             _context.EventSkills.AddRange(eventSkills);
             _context.Locations.AddRange(locations);
             _context.Organizations.AddRange(organizations);
+            _context.Skills.AddRange(organizationSkills);
             _context.Tasks.AddRange(tasks);
             _context.Campaigns.AddRange(campaigns);
             _context.Events.AddRange(events);
