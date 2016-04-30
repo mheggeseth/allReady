@@ -186,8 +186,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Be Ready to Get Out: Have a Home Escape Plan",
                 ManagingOrganization = htBox,
-                StartDateTime = DateTime.Today.AddMonths(-6).ToUniversalTime(),
-                EndDateTime = DateTime.Today.AddMonths(6).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddMonths(-3).ToUniversalTime(), //Old campaign
+                EndDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
                 TimeZoneId = "Central Standard Time"
             };
             htBox.Campaigns.Add(escapePlan);
@@ -198,8 +198,8 @@ namespace AllReady.DataAccess
             Event queenAnne = new Event()
             {
                 Name = "Queen Anne Fire Prevention Day",
-                StartDateTime = new DateTime(2015, 7, 4, 10, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 31, 15, 0, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(5).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(5).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 RequiredSkills = new List<EventSkill>()
             };
@@ -215,8 +215,8 @@ namespace AllReady.DataAccess
             Event ballard = new Event()
             {
                 Name = "Ballard Fire Prevention Day",
-                StartDateTime = new DateTime(2015, 7, 4, 10, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 31, 14, 0, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(10).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(10).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = firePrev
             };
@@ -225,8 +225,8 @@ namespace AllReady.DataAccess
             Event madrona = new Event()
             {
                 Name = "Madrona Fire Prevention Day",
-                StartDateTime = new DateTime(2015, 7, 4, 10, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 31, 14, 0, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(-5).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(-5).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = firePrev
             };
@@ -235,8 +235,8 @@ namespace AllReady.DataAccess
             Event southLoopSmoke = new Event()
             {
                 Name = "Smoke Detector Installation and Testing-South Loop",
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(1),
+                StartDateTime = DateTime.Today.AddDays(-10),
+                EndDateTime = DateTime.Today.AddDays(-3),
                 Location = GetRandom<Location>(locations),
                 Campaign = smokeDet
             };
@@ -245,8 +245,8 @@ namespace AllReady.DataAccess
             Event northLoopSmoke = new Event()
             {
                 Name = "Smoke Detector Installation and Testing-Near North Side",
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(1),
+                StartDateTime = DateTime.Today.AddDays(-3),
+                EndDateTime = DateTime.Today.AddDays(7),
                 Location = GetRandom<Location>(locations),
                 Campaign = smokeDet
             };
@@ -254,10 +254,10 @@ namespace AllReady.DataAccess
             tasks.AddRange(northLoopSmoke.Tasks);
             Event rentersInsurance = new Event()
             {
-                Name = "Renters Insurance Education Door to Door and a bag of chips",
+                Name = "Renters Insurance Education Door to Door",
                 Description = "description for the win",
-                StartDateTime = new DateTime(2015, 7, 11, 8, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 7, 11, 17, 0, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(3).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(3).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = financial
             };
@@ -267,8 +267,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Renters Insurance Education Door to Door (woop woop)",
                 Description = "another great description",
-                StartDateTime = new DateTime(2015, 7, 12, 8, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 12, 17, 0, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(10).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(10).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = financial
             };
@@ -278,8 +278,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Safety Kit Assembly Volunteer Day",
                 Description = "Full day of volunteers building kits",
-                StartDateTime = new DateTime(2015, 7, 11, 8, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 11, 16, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(3).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(3).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = safetyKit
             };
@@ -290,8 +290,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Safety Kit Distribution Weekend",
                 Description = "Handing out kits at local fire stations",
-                StartDateTime = new DateTime(2015, 7, 11, 8, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 11, 16, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(3),
+                EndDateTime = DateTime.Today.AddDays(5),
                 Location = GetRandom<Location>(locations),
                 Campaign = safetyKit
             };
@@ -301,8 +301,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Car Seat Testing-Naperville",
                 Description = "Checking car seats at local fire stations after last day of school year",
-                StartDateTime = new DateTime(2015, 7, 10, 9, 30, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 10, 15, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(-10),
+                EndDateTime = DateTime.Today.AddDays(10),
                 Location = GetRandom<Location>(locations),
                 Campaign = carSafe
             };
@@ -312,8 +312,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Car Seat and Tire Pressure Checking Volunteer Day",
                 Description = "Checking those things all day at downtown train station parking",
-                StartDateTime = new DateTime(2015, 7, 11, 8, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 11, 19, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddDays(-10).AddHours(8),
+                EndDateTime = DateTime.Today.AddDays(-10).AddHours(17),
                 Location = GetRandom<Location>(locations),
                 Campaign = carSafe
             };
@@ -323,10 +323,10 @@ namespace AllReady.DataAccess
             {
                 Name = "Park District Home Safety Festival",
                 Description = "At downtown park district(adjacent to pool)",
-                StartDateTime = new DateTime(2015, 7, 11, 12, 0, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 11, 16, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddMonths(-2),
+                EndDateTime = DateTime.Today.AddMonths(-2),
                 Location = GetRandom<Location>(locations),
-                Campaign = safetyKit
+                Campaign = escapePlan
             };
             homeFestival.Tasks = GetSomeTasks(homeFestival, htBox);
             tasks.AddRange(homeFestival.Tasks);
@@ -334,8 +334,8 @@ namespace AllReady.DataAccess
             {
                 Name = "Home Escape Plan Flyer Distribution",
                 Description = "Handing out flyers door to door in several areas of town after school/ work hours.Streets / blocks will vary but number of volunteers.",
-                StartDateTime = new DateTime(2015, 7, 15, 15, 30, 0).ToUniversalTime(),
-                EndDateTime = new DateTime(2015, 12, 15, 20, 30, 0).ToUniversalTime(),
+                StartDateTime = DateTime.Today.AddMonths(-3).AddDays(10),
+                EndDateTime = DateTime.Today.AddMonths(-1).AddDays(-10),
                 Location = GetRandom<Location>(locations),
                 Campaign = escapePlan
             };
