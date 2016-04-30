@@ -47,7 +47,7 @@ namespace AllReady.DataAccess
             #endregion
 
             List<Organization> organizations = new List<Organization>();
-            List<Skill> organizationSkills = new List<Skill>();
+            List<Skill> skills = new List<Skill>();
             List<Location> locations = GetLocations();
             List<ApplicationUser> users = new List<ApplicationUser>();
             List<TaskSignup> taskSignups = new List<TaskSignup>();
@@ -58,7 +58,6 @@ namespace AllReady.DataAccess
             List<Resource> resources = new List<Resource>();
             List<EventSignup> eventSignups = new List<EventSignup>();
             List<Contact> contacts = GetContacts();
-            var skills = new List<Skill>();
 
             #region Skills
             var medical = new Skill() { Name = "Medical", Description = "specific enough, right?" };
@@ -70,26 +69,40 @@ namespace AllReady.DataAccess
 
             #region Organization
 
-            Organization htb = new Organization()
+            Organization htBox = new Organization()
             {
                 Name = "Humanitarian Toolbox",
                 LogoUrl = "http://www.htbox.org/upload/home/ht-hero.png",
                 WebUrl = "http://www.htbox.org",
                 Location = locations.FirstOrDefault(),
                 Campaigns = new List<Campaign>(), 
-                OrganizationContacts = new List<OrganizationContact>(),
-                
+                OrganizationContacts = new List<OrganizationContact>()
             };
 
             #endregion
 
             #region Organization Skills
 
-            organizationSkills.Add(new Skill()
+            var skill_programming = new Skill()
+            {
+                Name = "Programming",
+                Description = "Like typing, but slower",
+                OwningOrganization = htBox
+            };
+            skills.Add(skill_programming);
+            skills.Add(new Skill()
             {
                 Name = "Code Ninja",
                 Description = "Ability to commit flawless code without review or testing",
-                OwningOrganization = htb
+                OwningOrganization = htBox,
+                ParentSkill = skill_programming
+            });
+            skills.Add(new Skill()
+            {
+                Name = "Code Cleaner",
+                Description = "Cleans up after Code Ninja",
+                OwningOrganization = htBox,
+                ParentSkill = skill_programming
             });
 
             #endregion
@@ -101,12 +114,12 @@ namespace AllReady.DataAccess
             var firePrev = new Campaign()
             {
                 Name = "Neighborhood Fire Prevention Days",
-                ManagingOrganization = htb,
-                TimeZoneId = "Central Standard Time",
-                StartDateTime = DateTime.UtcNow.AddMonths(-1),
-                EndDateTime = DateTime.UtcNow.AddMonths(3)
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(3).ToUniversalTime(),
+                TimeZoneId = "Central Standard Time"
             };
-            htb.Campaigns.Add(firePrev);
+            htBox.Campaigns.Add(firePrev);
 
             // Campaign 2
 
@@ -123,61 +136,61 @@ namespace AllReady.DataAccess
             var smokeDet = new Campaign()
             {
                 Name = "Working Smoke Detectors Save Lives",
-                ManagingOrganization = htb,
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(1),
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(1).ToUniversalTime(),
                 CampaignImpact = smokeDetImpact,
                 TimeZoneId = "Central Standard Time"
             };
-            htb.Campaigns.Add(smokeDet);
+            htBox.Campaigns.Add(smokeDet);
 
             // Campaign 3
 
             var financial = new Campaign()
             {
                 Name = "Everyday Financial Safety",
-                ManagingOrganization = htb,
-                TimeZoneId = "Central Standard Time",
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(1)
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(1).ToUniversalTime(),
+                TimeZoneId = "Pacific Standard Time"
             };
-            htb.Campaigns.Add(financial);
+            htBox.Campaigns.Add(financial);
 
             // Campaign 4
 
             var safetyKit = new Campaign()
             {
                 Name = "Simple Safety Kit Building",
-                ManagingOrganization = htb,
-                TimeZoneId = "Central Standard Time",
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(2)
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(2).ToUniversalTime(),
+                TimeZoneId = "Central Standard Time"
             };
-            htb.Campaigns.Add(safetyKit);
+            htBox.Campaigns.Add(safetyKit);
 
             // Campaign 5
 
             var carSafe = new Campaign()
             {
                 Name = "Family Safety In the Car",
-                ManagingOrganization = htb,
-                TimeZoneId = "Central Standard Time",
-                StartDateTime = DateTime.Today.AddMonths(-1),
-                EndDateTime = DateTime.Today.AddMonths(2)
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-1).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(2).ToUniversalTime(),
+                TimeZoneId = "Central Standard Time"
             };
-            htb.Campaigns.Add(carSafe);
+            htBox.Campaigns.Add(carSafe);
 
             // Campaign 6
 
             var escapePlan = new Campaign()
             {
                 Name = "Be Ready to Get Out: Have a Home Escape Plan",
-                ManagingOrganization = htb,
-                TimeZoneId = "Central Standard Time",
-                StartDateTime = DateTime.Today.AddMonths(-6),
-                EndDateTime = DateTime.Today.AddMonths(6)
+                ManagingOrganization = htBox,
+                StartDateTime = DateTime.Today.AddMonths(-6).ToUniversalTime(),
+                EndDateTime = DateTime.Today.AddMonths(6).ToUniversalTime(),
+                TimeZoneId = "Central Standard Time"
             };
-            htb.Campaigns.Add(escapePlan);
+            htBox.Campaigns.Add(escapePlan);
 
             #endregion
 
@@ -190,7 +203,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 RequiredSkills = new List<EventSkill>()
             };
-            queenAnne.Tasks = GetSomeTasks(queenAnne, htb);
+            queenAnne.Tasks = GetSomeTasks(queenAnne, htBox);
             var ask = new EventSkill() { Skill = surgeon, Event = queenAnne };
             queenAnne.RequiredSkills.Add(ask);
             eventSkills.Add(ask);
@@ -207,7 +220,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = firePrev
             };
-            ballard.Tasks = GetSomeTasks(ballard, htb);
+            ballard.Tasks = GetSomeTasks(ballard, htBox);
             tasks.AddRange(ballard.Tasks);
             Event madrona = new Event()
             {
@@ -217,7 +230,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = firePrev
             };
-            madrona.Tasks = GetSomeTasks(madrona, htb);
+            madrona.Tasks = GetSomeTasks(madrona, htBox);
             tasks.AddRange(madrona.Tasks);
             Event southLoopSmoke = new Event()
             {
@@ -227,7 +240,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = smokeDet
             };
-            southLoopSmoke.Tasks = GetSomeTasks(southLoopSmoke, htb);
+            southLoopSmoke.Tasks = GetSomeTasks(southLoopSmoke, htBox);
             tasks.AddRange(southLoopSmoke.Tasks);
             Event northLoopSmoke = new Event()
             {
@@ -237,7 +250,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = smokeDet
             };
-            northLoopSmoke.Tasks = GetSomeTasks(northLoopSmoke, htb);
+            northLoopSmoke.Tasks = GetSomeTasks(northLoopSmoke, htBox);
             tasks.AddRange(northLoopSmoke.Tasks);
             Event rentersInsurance = new Event()
             {
@@ -248,7 +261,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = financial
             };
-            rentersInsurance.Tasks = GetSomeTasks(rentersInsurance, htb);
+            rentersInsurance.Tasks = GetSomeTasks(rentersInsurance, htBox);
             tasks.AddRange(rentersInsurance.Tasks);
             Event rentersInsuranceEd = new Event()
             {
@@ -259,7 +272,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = financial
             };
-            rentersInsuranceEd.Tasks = GetSomeTasks(rentersInsuranceEd, htb);
+            rentersInsuranceEd.Tasks = GetSomeTasks(rentersInsuranceEd, htBox);
             tasks.AddRange(rentersInsuranceEd.Tasks);
             Event safetyKitBuild = new Event()
             {
@@ -270,7 +283,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = safetyKit
             };
-            safetyKitBuild.Tasks = GetSomeTasks(safetyKitBuild, htb);
+            safetyKitBuild.Tasks = GetSomeTasks(safetyKitBuild, htBox);
             tasks.AddRange(safetyKitBuild.Tasks);
 
             Event safetyKitHandout = new Event()
@@ -282,7 +295,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = safetyKit
             };
-            safetyKitHandout.Tasks = GetSomeTasks(safetyKitHandout, htb);
+            safetyKitHandout.Tasks = GetSomeTasks(safetyKitHandout, htBox);
             tasks.AddRange(safetyKitHandout.Tasks);
             Event carSeatTest1 = new Event()
             {
@@ -293,7 +306,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = carSafe
             };
-            carSeatTest1.Tasks = GetSomeTasks(carSeatTest1, htb);
+            carSeatTest1.Tasks = GetSomeTasks(carSeatTest1, htBox);
             tasks.AddRange(carSeatTest1.Tasks);
             Event carSeatTest2 = new Event()
             {
@@ -304,7 +317,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = carSafe
             };
-            carSeatTest2.Tasks = GetSomeTasks(carSeatTest2, htb);
+            carSeatTest2.Tasks = GetSomeTasks(carSeatTest2, htBox);
             tasks.AddRange(carSeatTest2.Tasks);
             Event homeFestival = new Event()
             {
@@ -315,7 +328,7 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = safetyKit
             };
-            homeFestival.Tasks = GetSomeTasks(homeFestival, htb);
+            homeFestival.Tasks = GetSomeTasks(homeFestival, htBox);
             tasks.AddRange(homeFestival.Tasks);
             Event homeEscape = new Event()
             {
@@ -326,9 +339,10 @@ namespace AllReady.DataAccess
                 Location = GetRandom<Location>(locations),
                 Campaign = escapePlan
             };
-            homeEscape.Tasks = GetSomeTasks(homeEscape, htb);
+            homeEscape.Tasks = GetSomeTasks(homeEscape, htBox);
             tasks.AddRange(homeEscape.Tasks);
             #endregion
+            
             #region Link campaign and event
             firePrev.Events = new List<Event>();
             firePrev.Events.Add(queenAnne);
@@ -350,8 +364,9 @@ namespace AllReady.DataAccess
             escapePlan.Events.Add(homeFestival);
             escapePlan.Events.Add(homeEscape);
             #endregion
+
             #region Add Campaigns and Events
-            organizations.Add(htb);
+            organizations.Add(htBox);
             campaigns.Add(firePrev);
             campaigns.Add(smokeDet);
             campaigns.Add(financial);
@@ -442,7 +457,7 @@ namespace AllReady.DataAccess
             #endregion
 
             #region TennatContacts
-            htb.OrganizationContacts.Add(new OrganizationContact { Contact = contacts.First(), Organization = htb, ContactType = 1 /*Primary*/ });
+            htBox.OrganizationContacts.Add(new OrganizationContact { Contact = contacts.First(), Organization = htBox, ContactType = 1 /*Primary*/ });
             #endregion
 
             #region Wrap Up DB  
